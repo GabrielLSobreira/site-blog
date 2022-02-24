@@ -1,13 +1,12 @@
 import { GetStaticProps } from 'next';
+import { useState } from 'react';
 import Head from 'next/head';
 import styles from './styles.module.scss';
 import Link from 'next/link';
 import Image from 'next/image';
-import thumbImg from '../../../public/images/thumb.png';
 import { getPrismicClient } from '../../services/prismic';
 import Prismic from '@prismicio/client';
 import { RichText } from 'prismic-dom';
-
 import {
   FiChevronLeft,
   FiChevronsLeft,
@@ -27,7 +26,9 @@ interface PostsProps {
   posts: Post[];
 }
 
-export default function Posts({ posts }: PostsProps) {
+export default function Posts({ posts: postsBlog }: PostsProps) {
+  const [posts, setPosts] = useState(postsBlog || []);
+
   return (
     <>
       <Head>
@@ -35,34 +36,35 @@ export default function Posts({ posts }: PostsProps) {
       </Head>
       <main className={styles.container}>
         <div className={styles.posts}>
-          <Link href="/">
-            <a>
-              <div>
+          {posts.map((post) => (
+            <Link key={post.slug} href={`/posts/${post.slug}`}>
+              <a key={post.slug}>
                 <Image
-                  src={thumbImg}
-                  alt="Post"
+                  src={post.cover}
+                  alt={post.title}
                   width={720}
                   height={410}
                   quality={100}
+                  placeholder="blur"
+                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mN0vQgAAWEBGHsgcxcAAAAASUVORK5CYII="
                 />
-                <strong>Criando meu primeiro aplicativo</strong>
-                <time>14 JULHO 2021</time>
-              </div>
-              <p>
-                Hoje vamos criar o controle de mostrar a senha no input, uma
-                opção para os nossos formulários de cadastro e login.
-              </p>
-            </a>
-          </Link>
+                <strong>{post.title}</strong>
+                <time>{post.updatedAt}</time>
+                <p>{post.description}</p>
+              </a>
+            </Link>
+          ))}
+
           <div className={styles.buttonNavigate}>
             <div>
               <button>
-                <FiChevronLeft size={25} color="#fff" />
-              </button>
-              <button>
                 <FiChevronsLeft size={25} color="#fff" />
               </button>
+              <button>
+                <FiChevronLeft size={25} color="#fff" />
+              </button>
             </div>
+
             <div>
               <button>
                 <FiChevronRight size={25} color="#fff" />

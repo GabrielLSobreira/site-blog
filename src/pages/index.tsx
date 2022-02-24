@@ -65,7 +65,7 @@ export default function Home({ content }: ContentProps) {
             alt="Conteúdos desenvolvimento de aplicacoes web"
           />
           <section>
-            <h2>{}</h2>
+            <h2>{content.webTitle}</h2>
             <span>{content.webContent}</span>
           </section>
         </div>

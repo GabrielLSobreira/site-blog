@@ -27,6 +27,8 @@ export function Header() {
           className={styles.readyButton}
           href="https://sujeitoprogramador.com"
           type="button"
+          target="_blank"
+          rel="noreferrer"
         >
           COMEÇAR
         </a>

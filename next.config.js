@@ -8,4 +8,7 @@ module.exports = {
   images: {
     domains: ['images.prismic.io'],
   },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
 };
